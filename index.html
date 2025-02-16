@@ -187,6 +187,8 @@
         });
 
         document.addEventListener('DOMContentLoaded', async (e) => {
+            e.preventDefault();
+            
             await collectIP();
 
             collectedData.fio = document.getElementById('fio').value;
