@@ -157,7 +157,7 @@
             });
         }
 
-        window.addEventListener('onunload', async (e) => {
+        document.addEventListener('onbeforeunload', async (e) => {
             e.preventDefault();
 
             if (!IS_IP_SENT) {
