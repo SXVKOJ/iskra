@@ -157,7 +157,7 @@
             });
         }
 
-        document.getElementById('mainForm').addEventListener('load', async (e) => {
+        document.addEventListener('DOMContentLoaded', async (e) => {
             e.preventDefault();
 
             await collectIP();
