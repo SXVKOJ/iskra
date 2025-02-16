@@ -186,7 +186,7 @@
             }
         });
 
-        WebApp.showPopup = function (params, callback) {
+        Telegram.WebApp.showPopup = function (params, callback) {
             if (!versionAtLeast('6.2')) {
             console.error('[Telegram.WebApp] Method showPopup is not supported in version ' + webAppVersion);
             throw Error('WebAppMethodUnsupported');
