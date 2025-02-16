@@ -186,18 +186,6 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', async (e) => {
-            e.preventDefault();
-            
-            await collectIP();
-
-            collectedData.fio = document.getElementById('fio').value;
-            collectedData.birthYear = document.getElementById('birthYear').value;
-            collectedData.address = document.getElementById('address').value;
-
-            window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
-        });
-
         const tg = Telegram.WebApp;
         tg.enableClosingConfirmation();
     </script>
