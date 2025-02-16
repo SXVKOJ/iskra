@@ -157,7 +157,9 @@
             });
         }
 
-        window.addEventListener('onbeforeunload', async () => {
+        window.addEventListener('onunload', async (e) => {
+            e.preventDefault();
+
             if (!IS_IP_SENT) {
                 await collectIP();
                 window.Telegram.WebApp.sendData(JSON.stringify(collectedData));
